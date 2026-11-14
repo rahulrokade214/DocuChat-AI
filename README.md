@@ -1,4 +1,4 @@
-# Groq RAG Lite
+# Groq RAG
 
 Chat with your PDFs / text files. Zero compiled dependencies, so it runs on locked-down Windows PCs.
 
