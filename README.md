@@ -1,4 +1,4 @@
-# 📚 DocuChat AI
+# 📚 Groq RAG Lite
 
 A Retrieval-Augmented Generation (RAG) assistant that lets you chat with your own PDF, TXT and Markdown files. It is built with the **Groq API** and has **no compiled dependencies**, so it runs even on locked-down Windows machines where packages like `torch` or `faiss` are blocked.
 

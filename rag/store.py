@@ -90,8 +90,10 @@ class Store:
 
     def search(self, query, k=4):
         q = tokenize(query)
-        if not self.docs or not q:
+        if not self.docs:
             return []
+        if not q:  # no usable keywords (e.g. "summarize this"): fall back to the start of the documents
+            return [{**d, "score": 0} for d in self.docs[:k]]
         scores = []
         for i, tf in enumerate(self.tf):
             s = 0.0
@@ -102,7 +104,8 @@ class Store:
                         f + self.k1 * (1 - self.b + self.b * self.lens[i] / (self.avgdl or 1)))
             scores.append(s)
         top = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:k]
-        return [{**self.docs[i], "score": round(scores[i], 3)} for i in top if scores[i] > 0]
+        hits = [{**self.docs[i], "score": round(scores[i], 3)} for i in top if scores[i] > 0]
+        return hits or [{**d, "score": 0} for d in self.docs[:k]]
 
     def sources(self):
         return sorted({d["source"] for d in self.docs})
